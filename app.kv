@@ -1,0 +1,66 @@
+# TODO: Create your Kivy layout in the kv language here
+BoxLayout:
+        id: main_box
+    orientation: "horizontal"
+    Popup:
+        id: popup
+        title: ""
+        size_hint: 0.6, 0.3
+        on_parent:
+            if self.parent == main_box: self.parent.remove_widget(self)
+        BoxLayout:
+            orientation: "vertical"
+            Label:
+                id: show_message
+                size_hint_y: 1,5
+            Button:
+                size_hint_y: 0,75
+                text: "OK"
+                on_press: app.close_pop_up_message()
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint_x: 0.5
+        Label:
+            text:"Sort by:"
+        Spinner:
+            text: "Title"
+            values: "Title", "Year", "Category", "Is_Listened"
+            on_text: app.sort_list(self.text.lower())
+        Label:
+            text:"Add new Song"
+        Label:
+            text:"Title:"
+        TextInput:
+            id: input_title
+            multiline: False
+        Label:
+            text:"Category:"
+        TextInput:
+            id: input_category
+            multiline: False
+        Label:
+            text:"Year:"
+        TextInput:
+            id: input_year
+            multiline: False
+        Button:
+            text: "Add song"
+            on_press:app.add_song(input_title.text, input_year.text, input_category.text)
+        Button:
+            text: "Clear song"
+            on_press:app.clear_add_song()
+
+    BoxLayout:
+        orientation:"vertical"
+        Label:
+            id: song_status
+            size_hint_y: 0.05
+        BoxLayout:
+            size_hint_y: 0.9
+            id: entry_box
+            orientation: "vertical"
+        Label:
+            size_hint_y: 0.05
+            id: output_message
+            font_size:14
